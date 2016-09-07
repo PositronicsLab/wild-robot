@@ -1,0 +1,3 @@
+This directory contains all data that required a first-pass assessment by a human operator.  
+
+The signals directory contains a record of all the frames for the corresponding trial where the motor actuator was in a position that triggered an observable LED signal.

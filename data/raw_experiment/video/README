@@ -1,0 +1,1 @@
+Directory contains the recorded raw video footage that was captured during the weazelball data gathering session.  Each video has a corresponding vicon data stream stored in the vicon directory.  The file index corresponds to the session in which data was captured.
