@@ -1,7 +1,9 @@
-##Video
+## Video  
 ![](https://github.com/PositronicsLab/wild-robot/blob/master/simwise4d/img/wb-simwise.gif)
 
-## Generating Video
+The above is an video rendered from SimWise 4D of the Weazelball in simulation.
+
+## Generating Video  
 ![](https://github.com/PositronicsLab/wild-robot/blob/master/simwise4d/img/sw4d-simulation-settings.png)
 
 <i>Figure 1</i> - This dialog is found at World | Simulation Settings.  If Microsoft Video is selected for Compressor, refer to Figure 3, then the Animation Frame Rate | Rate field needs to be 15fps.  The Time field will auto-calculate based on the value in the Rate field.  In the Integration Step frame, if the Integration Step field is changed manually, it will recalculate the values in the Animation Frame Rate frame; however, the Steps per Frame field can be changed without recalculating the Animation Frame Rate fields and the Integration Step field will be automatically calculated.  Therefore, the Time and Integration values shown here were automatically calculated from the values in the Rate and Steps per Frame fields.
