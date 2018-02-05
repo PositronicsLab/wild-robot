@@ -15,19 +15,27 @@
         </inertia>
         <mass>0.0489</mass>
       </inertial>
-      <visual name="shell_1_geom_visual">
+      <visual name="shell_geom_visual1">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
-            <uri>model://weazelball/meshes/visual/shell_ctl_side.dae</uri>
+            <uri>model://weazelball/meshes/visual/wb-shell-fixedhemi.dae</uri>
           </mesh>
         </geometry>
       </visual>
-      <visual name="shell_2_geom_visual">
+      <visual name="shell_geom_visual2">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
-            <uri>model://weazelball/meshes/visual/shell_joint_side.dae</uri>
+            <uri>model://weazelball/meshes/visual/wb-shell-freehemi.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name="shell_geom_visual3">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://weazelball/meshes/visual/wb-shell-oring.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -60,7 +68,8 @@
     <link name="motor">
       <self_collide>false</self_collide>
       <inertial>
-        <pose>0 0 0 0 0 0</pose>
+        <pose>-0.01656 0.00141 -0.00170 0 0 0</pose>
+<!-- Taken at center of mass and aligned with origin -->
         <inertia>
           <ixx>0.00002191279</ixx>
           <ixy>0.00000232259</ixy>
@@ -71,11 +80,20 @@
         </inertia>
         <mass>0.0864</mass>
       </inertial>
-      <visual name="motor_geom_visual">
-        <pose>0 0 0 0 -1.5708 0</pose>
+      <visual name="motor_geom_visual1">
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
-            <uri>model://weazelball/meshes/visual/motor.dae</uri>
+            <!--<uri>model://weazelball/meshes/visual/motor.dae</uri>-->
+            <uri>model://weazelball/meshes/visual/wb-bob-housing.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name="motor_geom_visual2">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://weazelball/meshes/visual/wb-bob-cw.dae</uri>
           </mesh>
         </geometry>
       </visual>
