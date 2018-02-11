@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
-  <world name="visualize-weazelball">
+  <world name="simulate-weazelball">
     <physics type="ode">
       <gravity>0 0 -10</gravity>
       <max_step_size>0.001</max_step_size>

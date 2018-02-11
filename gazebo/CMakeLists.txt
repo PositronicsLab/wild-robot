@@ -16,6 +16,15 @@ endif()
 include_directories( ${RAVELIN_INCLUDE_DIRS} )
 link_directories( ${RAVELIN_LIBRARY_DIRS} )
 
+include (FindPkgConfig)
+if (PKG_CONFIG_FOUND)
+  pkg_check_modules(GAZEBO gazebo)
+  pkg_check_modules(OGRE OGRE)
+  pkg_check_modules(OGRE-Terrain OGRE-Terrain)
+endif()
+include_directories(${GAZEBO_INCLUDE_DIRS} ${OGRE_INCLUDE_DIRS} ${OGRE-Terrain_INCLUDE_DIRS})
+link_directories(${GAZEBO_LIBRARY_DIRS} ${OGRE_LIBRARY_DIRS})
+
 
 #------------------------------------------------------------------------------
 ## Code
@@ -35,6 +44,8 @@ set( HDRS
   video.h
   models.h
   weazelball.h
+  movie.h
+  gazebo_log.h
 )
 
 set( SRCS
@@ -59,6 +70,15 @@ target_link_libraries( height-controller ${LIBS} )
 
 add_library( simulation-controller SHARED simulation_controller.cpp ${HDRS} ${SRCS} )
 target_link_libraries( simulation-controller ${LIBS} )
+
+add_library( render-controller SHARED render_controller.cpp ${HDRS} ${SRCS} )
+target_link_libraries( render-controller ${LIBS} )
+
+add_library( movie-plugin SHARED camera_plugin.cpp ${HDRS} ${SRCS} )
+target_link_libraries( movie-plugin ${LIBS} )
+
+#add_library( movie-plugin SHARED render_plugin.cpp ${HDRS} ${SRCS} )
+#target_link_libraries( movie-plugin ${LIBS} )
 
 #add_library( postprocess-controller SHARED postprocess_controller.cpp ${HDRS} ${SRCS} )
 #target_link_libraries( postprocess-controller ${LIBS} )
