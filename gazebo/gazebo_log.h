@@ -1,3 +1,9 @@
+/*
+  State consists of shell(pos[3], rot[4], vel[3], drot[3], theta, dtheta)
+  pos, rot, vel, drot are shell parameters
+  theta and dtheta are joint parameters
+*/
+
 #ifndef _WB_GAZEBO_LOG_H_
 #define _WB_GAZEBO_LOG_H_
 
@@ -30,7 +36,7 @@ typedef boost::shared_ptr<wb_gazebo_data_c> wb_gazebo_data_ptr;
 //-----------------------------------------------------------------------------
 class wb_state_c : public state_c {
 public:
-  wb_state_c( void ) : state_c(8) {
+  wb_state_c( void ) : state_c(15) {
     _x[6] = 1.0;  // normalize w coordinate
   }
   virtual ~wb_state_c( void ) {}
@@ -89,18 +95,32 @@ public:
     assert( _log );
 
     std::stringstream data;
+    //gazebo::math::Vector3 pos = wb->shell()->GetWorldPose().pos;
+    //gazebo::math::Quaternion rot = wb->shell()->GetWorldPose().rot;
+    //double theta = wb->actuator()->GetAngle(0).Radian();
 
-    gazebo::math::Vector3 pos = wb->shell()->GetWorldPose().pos;
-    gazebo::math::Quaternion rot = wb->shell()->GetWorldPose().rot;
-    //gazebo::math::Vector3 mpos = wb->motor()->GetWorldPose().pos;
-    //gazebo::math::Quaternion mrot = wb->motor()->GetWorldPose().rot;
+    //data << virtual_t << " ";
+    //data << pos.x << " " << pos.y << " "<< pos.z << " ";
+    //data << rot.x << " " << rot.y << " "<< rot.z << " " << rot.w << " ";
+    //data << theta << std::endl;
+ 
+    gazebo::physics::ModelPtr base = wb->model();
+    gazebo::math::Pose pose = wb->shell()->GetWorldPose();
+
+    gazebo::math::Vector3 pos = pose.pos;
+    gazebo::math::Quaternion rot = pose.rot;
+    gazebo::math::Vector3 vel = base->GetWorldLinearVel();
+    gazebo::math::Vector3 drot = base->GetWorldAngularVel();
     double theta = wb->actuator()->GetAngle(0).Radian();
+    //double dtheta = wb->actuator()->GetVelocity(0).Radian();
+    double dtheta = wb->actuator()->GetVelocity(0);
 
     data << virtual_t << " ";
     data << pos.x << " " << pos.y << " "<< pos.z << " ";
     data << rot.x << " " << rot.y << " "<< rot.z << " " << rot.w << " ";
-    //data << mrot.x << " " << mrot.y << " "<< mrot.z << " "<< mrot.w << std::endl; 
-    data << theta << std::endl;
+    data << vel.x << " " << vel.y << " "<< vel.z << " ";
+    data << drot.x << " " << drot.y << " "<< drot.z << " ";
+    data << theta << " " << dtheta << std::endl;
  
     if( !_log->write( data.str() ) ) {
       return 1;
@@ -141,18 +161,28 @@ public:
 
     wb_state_ptr state = states.at(state_idx);
 
-    // extract the position vector from the state
+    // extract the position vector of the shell from the state
     gazebo::math::Vector3 pos = gazebo::math::Vector3( state->val(0), state->val(1), state->val(2) );
 
-    // extract the rotation quaternion from the state
+    // extract the rotation quaternion of the shell from the state
     gazebo::math::Quaternion rot = gazebo::math::Quaternion( state->val(6), state->val(3), state->val(4), state->val(5) );
 
-    //gazebo::math::Quaternion mrot = gazebo::math::Quaternion( state->val(10), state->val(7), state->val(8), state->val(9) );
-    double theta = state->val(7);
+    // extract the linear velocity of the shell from the state
+    gazebo::math::Vector3 vel = gazebo::math::Vector3( state->val(7), state->val(8), state->val(9) );
 
+    // extract the angular velocity of the shell from the state
+    gazebo::math::Vector3 drot = gazebo::math::Vector3( state->val(10), state->val(11), state->val(12) );
+
+    // extract the joint angle and the joint velocity from the state
+    double theta = state->val(13);
+    double dtheta = state->val(14);
+
+    // map state to the model
     wb->model()->SetLinkWorldPose( gazebo::math::Pose( pos, rot ), wb->shell() );
-
+    wb->model()->SetLinearVel( vel );
+    wb->model()->SetAngularVel( drot );
     wb->actuator()->SetPosition( 0, theta );
+    wb->actuator()->SetVelocity( 0, dtheta );
 
     //world->sim_time( state->t() );
 
