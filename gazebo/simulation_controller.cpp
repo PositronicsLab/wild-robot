@@ -27,6 +27,12 @@ to ensure that a controller exists for each step in post-processing
 
 #define PI 3.14159265359
 
+//#define END_T 120.1f   
+#define END_T 300.1f   
+
+//#define MOTOR_FREQ 2.333
+#define MOTOR_FREQ 2.5
+
 //-----------------------------------------------------------------------------
 /**
 The gazebo plugin visualization controller
@@ -83,6 +89,9 @@ namespace gazebo
       actuator = _weazelball->actuator();
       virtual_time = 0.0;   
 
+      std::string world_name = model->GetWorld()->GetName();
+      std::string engine_name = model->GetWorld()->GetPhysicsEngine()->GetType();
+      printf("running %s using %s\n", world_name.c_str(), engine_name.c_str());
 /*
       int r = rsync.open();
       if( r != 0 ) {
@@ -96,6 +105,7 @@ namespace gazebo
         exit(1);
         return;
       }
+
       // -- FIN --
       printf( "simulation controller has initialized\n" ); 
     }
@@ -106,17 +116,21 @@ namespace gazebo
 
       //rsync.synchronize( );
       double t = _world->sim_time();
-      if( t > 120.0f ) exit(0);
+      if( t > END_T ) exit(0);
 
-      double dt = 0.001;
+      //double dt = 0.001;
 
-      double motor_freq = 2.333;
+      //printf("t: %f, theta: %f\n", t, actuator->GetAngle( 0 ).Radian());
+
+      double motor_freq = MOTOR_FREQ;
       double theta_0 = 0;
       double theta_t = actuator->GetAngle( 0 ).Radian();
       double omega = actuator->GetVelocity( 0 );
 
       double desired_omega = 2.0 * PI * motor_freq;
       double desired_theta_t = t * desired_omega + theta_0;
+
+      //printf("t: %f, theta_t:%f, desired_theta_t: %f\n", t, theta_t, desired_theta_t);
 
       double Kp = 0.3;
       double Kd = 0.03;
@@ -130,7 +144,7 @@ namespace gazebo
 
       actuator->SetForce( 0, u );
 
-      virtual_time += dt;
+      //virtual_time += dt;
 
       log->write( t, _weazelball );
       //rsync.yield_to_render();

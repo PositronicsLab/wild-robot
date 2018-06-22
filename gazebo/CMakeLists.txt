@@ -68,14 +68,19 @@ target_link_libraries( filtering-controller ${LIBS} )
 add_library( height-controller SHARED height_correction_controller.cpp ${HDRS} ${SRCS} )
 target_link_libraries( height-controller ${LIBS} )
 
-add_library( simulation-controller SHARED simulation_controller.cpp ${HDRS} ${SRCS} )
+#add_library( simulation-controller SHARED simulation_controller.cpp ${HDRS} ${SRCS} )
+add_library( simulation-controller SHARED randomization_controller.cpp ${HDRS} ${SRCS} )
 target_link_libraries( simulation-controller ${LIBS} )
+
 
 add_library( render-controller SHARED render_controller.cpp ${HDRS} ${SRCS} )
 target_link_libraries( render-controller ${LIBS} )
 
 add_library( movie-plugin SHARED camera_plugin.cpp ${HDRS} ${SRCS} )
 target_link_libraries( movie-plugin ${LIBS} )
+
+#add_library( block-on-plane-controller SHARED block_on_plane_controller.cpp ${HDRS} ${SRCS} )
+#target_link_libraries( block-on-plane-controller ${LIBS} )
 
 #add_library( movie-plugin SHARED render_plugin.cpp ${HDRS} ${SRCS} )
 #target_link_libraries( movie-plugin ${LIBS} )
@@ -107,3 +112,14 @@ file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/postprocess.world DESTINATION ${CMAKE_CUR
 
 # designed to work in conjunction with the simulation-controller
 file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/simulate.world DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/simulate-offset-4.world DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/simulate-offset-3.world DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/simulate-offset-2.world DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/simulate-offset-1.world DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/simulate-offset+1.world DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/simulate-offset+2.world DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/simulate-offset+3.world DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/simulate-offset+4.world DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+
+# designed to work in conjunction with the friction-controller
+file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/block-on-plane.world DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )

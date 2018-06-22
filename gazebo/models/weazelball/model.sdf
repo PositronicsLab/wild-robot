@@ -56,19 +56,49 @@
               <slip2>0.0</slip2>
             </ode>
             <bullet>
-              <friction>1</friction>
-              <friction2>1</friction2> 
+              <friction>0.5</friction>
+              <friction2>0.5</friction2> 
               <fdir1>0 0 0</fdir1>
-              <rolling_friction>1</rolling_friction>
+              <rolling_friction>0.5</rolling_friction>
             </bullet>
           </friction>
+          <contact>
+            <ode>
+              <soft_cfm>0</soft_cfm>
+              <soft_erp>0.2</soft_erp>
+              <kp>1e12</kp>
+              <kd>1.0</kd>
+              <max_vel>0.01</max_vel>
+              <min_depth>0.0</min_depth>
+            </ode>
+            <bullet>
+              <soft_cfm>0</soft_cfm>
+              <soft_erp>0.2</soft_erp>
+              <kp>1e12</kp>
+              <kd>1.0</kd>
+              <split_impulse>1</split_impulse>
+              <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
+            </bullet>
+          </contact>
         </surface>
       </collision>
     </link>
     <link name="motor">
       <self_collide>false</self_collide>
       <inertial>
-        <pose>-0.01656 0.00141 -0.00170 0 0 0</pose>
+<!--
+        <pose>-0.003312 0.00141 -0.00170 0 0 0</pose>
+        <pose>-0.006624 0.00141 -0.00170 0 0 0</pose>
+        <pose>-0.009936 0.00141 -0.00170 0 0 0</pose>
+        <pose>-0.013248 0.00141 -0.00170 0 0 0</pose>
+-->
+        <pose>-0.016560 0.00141 -0.00170 0 0 0</pose>
+<!--
+        <pose>-0.019872 0.00141 -0.00170 0 0 0</pose>
+        <pose>-0.023184 0.00141 -0.00170 0 0 0</pose>
+        <pose>-0.026496 0.00141 -0.00170 0 0 0</pose>
+        <pose>-0.029808 0.00141 -0.00170 0 0 0</pose>
+-->
 <!-- Taken at center of mass and aligned with origin -->
         <inertia>
           <ixx>0.00002191279</ixx>
